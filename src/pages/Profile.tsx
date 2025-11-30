@@ -11,13 +11,14 @@ import { useToast } from "@/hooks/use-toast";
 
 interface ProfileData {
   id: string;
+  user_id: string;
   full_name: string;
   email: string;
-  phone: string;
-  avatar_url: string;
-  role: string;
-  company: string;
+  phone: string | null;
+  avatar_url: string | null;
+  company: string | null;
   created_at: string;
+  updated_at: string;
 }
 
 const Profile = () => {
@@ -89,14 +90,6 @@ const Profile = () => {
     );
   }
 
-  const getRoleBadge = (role: string) => {
-    const colors = {
-      admin: "bg-destructive/10 text-destructive",
-      vendeur: "bg-primary/10 text-primary",
-      client: "bg-success/10 text-success"
-    };
-    return colors[role as keyof typeof colors] || "bg-muted";
-  };
 
   return (
     <DashboardLayout>
@@ -112,10 +105,10 @@ const Profile = () => {
 
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-foreground">{profile.full_name}</h1>
-                <Badge className={getRoleBadge(profile.role)}>
-                  {profile.role.charAt(0).toUpperCase() + profile.role.slice(1)}
-                </Badge>
+                  <h1 className="text-3xl font-bold text-foreground">{profile.full_name}</h1>
+                  <Badge className="bg-primary/10 text-primary">
+                    Utilisateur
+                  </Badge>
               </div>
 
               <div className="grid grid-cols-2 gap-4 mt-4">

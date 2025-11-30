@@ -38,7 +38,6 @@ Deno.serve(async (req) => {
     const { data: customers } = await supabase
       .from('profiles')
       .select('*')
-      .eq('role', 'client')
       .limit(10);
 
     // Fetch deals data
