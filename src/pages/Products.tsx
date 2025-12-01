@@ -6,7 +6,18 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Search, Package, DollarSign } from "lucide-react";
+import { Plus, Search, Package, DollarSign, Edit, Trash2 } from "lucide-react";
+import { ProductDialog } from "@/components/ProductDialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface Product {
   id: string;
@@ -23,6 +34,10 @@ const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     fetchProducts();
@@ -54,6 +69,50 @@ const Products = () => {
     product.category?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleAddProduct = () => {
+    setSelectedProduct(undefined);
+    setDialogOpen(true);
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setDialogOpen(true);
+  };
+
+  const handleDeleteClick = (productId: string) => {
+    setProductToDelete(productId);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!productToDelete) return;
+
+    try {
+      const { error } = await supabase
+        .from("products")
+        .delete()
+        .eq("id", productToDelete);
+
+      if (error) throw error;
+
+      toast({
+        title: "Succès",
+        description: "Produit supprimé avec succès",
+      });
+      fetchProducts();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de supprimer le produit",
+        variant: "destructive",
+      });
+    } finally {
+      setDeleteDialogOpen(false);
+      setProductToDelete(null);
+    }
+  };
+
   const getCategoryColor = (category: string) => {
     const colors = {
       software: "bg-primary/10 text-primary",
@@ -84,7 +143,7 @@ const Products = () => {
               Gérez votre catalogue de produits et services
             </p>
           </div>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={handleAddProduct}>
             <Plus className="h-4 w-4" />
             Ajouter Produit
           </Button>
@@ -109,7 +168,7 @@ const Products = () => {
             <p className="text-muted-foreground mb-4">
               Commencez par ajouter des produits à votre catalogue
             </p>
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={handleAddProduct}>
               <Plus className="h-4 w-4" />
               Ajouter Produit
             </Button>
@@ -155,15 +214,52 @@ const Products = () => {
                     </Badge>
                   </div>
 
-                  <Button className="w-full mt-4" variant="outline">
-                    Voir Détails
-                  </Button>
+                  <div className="flex gap-2 mt-4">
+                    <Button 
+                      className="flex-1" 
+                      variant="outline"
+                      onClick={() => handleEditProduct(product)}
+                    >
+                      <Edit className="h-4 w-4 mr-2" />
+                      Modifier
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => handleDeleteClick(product.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               </Card>
             ))}
           </div>
         )}
       </div>
+
+      <ProductDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        product={selectedProduct}
+        onSuccess={fetchProducts}
+      />
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmer la suppression</AlertDialogTitle>
+            <AlertDialogDescription>
+              Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Annuler</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteConfirm}>
+              Supprimer
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardLayout>
   );
 };
