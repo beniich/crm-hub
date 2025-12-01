@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, Mail, Phone } from "lucide-react";
+import { Search, Mail, Phone, Edit, Trash2 } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -12,56 +12,103 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { CustomerDialog } from "./CustomerDialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface Customer {
   id: string;
   name: string;
   email: string;
-  phone: string;
-  company: string;
-  status: "active" | "inactive" | "lead";
-  value: string;
+  phone: string | null;
+  company: string | null;
+  status: "lead" | "prospect" | "client" | "inactive";
+  value: number;
+  created_at: string;
+  updated_at: string;
 }
 
-const mockCustomers: Customer[] = [
-  { id: "1", name: "Sophie Martin", email: "sophie.martin@email.com", phone: "+33 6 12 34 56 78", company: "TechCorp", status: "active", value: "45 000 €" },
-  { id: "2", name: "Thomas Dubois", email: "thomas.dubois@email.com", phone: "+33 6 98 76 54 32", company: "InnoSolutions", status: "active", value: "32 000 €" },
-  { id: "3", name: "Marie Laurent", email: "marie.laurent@email.com", phone: "+33 6 45 67 89 01", company: "Digital Plus", status: "lead", value: "18 000 €" },
-  { id: "4", name: "Jean Bernard", email: "jean.bernard@email.com", phone: "+33 6 23 45 67 89", company: "WebAgency", status: "active", value: "56 000 €" },
-  { id: "5", name: "Claire Petit", email: "claire.petit@email.com", phone: "+33 6 87 65 43 21", company: "StartupHub", status: "inactive", value: "12 000 €" },
-];
-
 const statusColors = {
-  active: "bg-success/10 text-success border-success/20",
-  inactive: "bg-muted text-muted-foreground border-border",
   lead: "bg-info/10 text-info border-info/20",
+  prospect: "bg-warning/10 text-warning border-warning/20",
+  client: "bg-success/10 text-success border-success/20",
+  inactive: "bg-muted text-muted-foreground border-border",
 };
 
 const statusLabels = {
-  active: "Actif",
+  lead: "Lead",
+  prospect: "Prospect",
+  client: "Client",
   inactive: "Inactif",
-  lead: "Prospect",
 };
 
 export const CustomerTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredCustomers = mockCustomers.filter((customer) =>
-    customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    customer.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    customer.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const fetchCustomers = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("customers")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setCustomers((data || []) as Customer[]);
+    } catch (error) {
+      console.error("Error fetching customers:", error);
+      toast.error("Erreur lors du chargement des clients");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const handleDelete = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from("customers")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+      toast.success("Client supprimé avec succès");
+      fetchCustomers();
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+      toast.error("Erreur lors de la suppression");
+    }
+  };
+
+  const filteredCustomers = customers.filter((customer) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      customer.name.toLowerCase().includes(searchLower) ||
+      (customer.company?.toLowerCase() || "").includes(searchLower) ||
+      customer.email.toLowerCase().includes(searchLower)
+    );
+  });
 
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>Clients récents</CardTitle>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Nouveau client
-          </Button>
-        </div>
+        <CardTitle>Liste des clients</CardTitle>
         <div className="relative mt-4">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -81,33 +128,98 @@ export const CustomerTable = () => {
               <TableHead>Contact</TableHead>
               <TableHead>Statut</TableHead>
               <TableHead className="text-right">Valeur</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredCustomers.map((customer) => (
-              <TableRow key={customer.id} className="hover:bg-muted/50 transition-colors cursor-pointer">
-                <TableCell className="font-medium">{customer.name}</TableCell>
-                <TableCell>{customer.company}</TableCell>
-                <TableCell>
-                  <div className="flex flex-col gap-1 text-sm">
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Mail className="h-3 w-3" />
-                      {customer.email}
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Phone className="h-3 w-3" />
-                      {customer.phone}
-                    </div>
-                  </div>
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  Chargement...
                 </TableCell>
-                <TableCell>
-                  <Badge variant="outline" className={statusColors[customer.status]}>
-                    {statusLabels[customer.status]}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right font-semibold">{customer.value}</TableCell>
               </TableRow>
-            ))}
+            ) : filteredCustomers.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  Aucun client trouvé
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredCustomers.map((customer) => (
+                <TableRow key={customer.id} className="hover:bg-muted/50 transition-colors">
+                  <TableCell className="font-medium">{customer.name}</TableCell>
+                  <TableCell>{customer.company || "-"}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-col gap-1 text-sm">
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Mail className="h-3 w-3" />
+                        {customer.email}
+                      </div>
+                      {customer.phone && (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Phone className="h-3 w-3" />
+                          {customer.phone}
+                        </div>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className={statusColors[customer.status]}>
+                      {statusLabels[customer.status]}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-right font-semibold">
+                    {customer.value.toLocaleString("fr-FR", {
+                      style: "currency",
+                      currency: "EUR",
+                    })}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <CustomerDialog
+                        trigger={
+                          <Button variant="ghost" size="icon">
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                        }
+                        customerId={customer.id}
+                        defaultValues={{
+                          name: customer.name,
+                          email: customer.email,
+                          phone: customer.phone || "",
+                          company: customer.company || "",
+                          status: customer.status,
+                          value: customer.value.toString(),
+                        }}
+                        onSuccess={fetchCustomers}
+                      />
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="ghost" size="icon">
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Confirmer la suppression</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Êtes-vous sûr de vouloir supprimer ce client ? Cette action est
+                              irréversible.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Annuler</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleDelete(customer.id)}>
+                              Supprimer
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </CardContent>
