@@ -1,9 +1,13 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { CustomerTable } from "@/components/CustomerTable";
 import { Button } from "@/components/ui/button";
+import { CustomerDialog } from "@/components/CustomerDialog";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
 const Companies = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
+
   return (
     <DashboardLayout>
       <div className="p-8 space-y-6">
@@ -14,12 +18,17 @@ const Companies = () => {
               Gérez vos clients et prospects
             </p>
           </div>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Nouveau Client
-          </Button>
+          <CustomerDialog
+            trigger={
+              <Button className="gap-2">
+                <Plus className="h-4 w-4" />
+                Nouveau Client
+              </Button>
+            }
+            onSuccess={() => setRefreshKey(prev => prev + 1)}
+          />
         </div>
-        <CustomerTable />
+        <CustomerTable key={refreshKey} />
       </div>
     </DashboardLayout>
   );
