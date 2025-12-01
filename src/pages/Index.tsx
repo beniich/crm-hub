@@ -9,25 +9,25 @@ const Index = () => {
     <DashboardLayout>
       <div className="p-8 space-y-8">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold text-foreground">Tableau de bord</h1>
-          <p className="text-muted-foreground">Vue d'ensemble de vos activités CRM</p>
+          <h1 className="text-3xl font-bold text-foreground">CRM Pro - Vue d'ensemble</h1>
+          <p className="text-muted-foreground">Tableau de bord de gestion de la relation client</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <MetricCard
-            title="Total Clients"
+            title="Clients Actifs"
             value="2,543"
             icon={Users}
             trend={{ value: "12.5%", isPositive: true }}
           />
           <MetricCard
-            title="Opportunités Actives"
+            title="Opportunités"
             value="87"
             icon={Target}
             trend={{ value: "8.3%", isPositive: true }}
           />
           <MetricCard
-            title="Revenus du Mois"
+            title="CA du Mois"
             value="245K €"
             icon={DollarSign}
             trend={{ value: "23.1%", isPositive: true }}

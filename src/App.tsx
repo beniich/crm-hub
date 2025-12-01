@@ -9,6 +9,13 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import Index from "./pages/Index";
+import Deals from "./pages/Deals";
+import Analytics from "./pages/Analytics";
+import Companies from "./pages/Companies";
+import Products from "./pages/Products";
+import Settings from "./pages/Settings";
+import AIAssistant from "./pages/AIAssistant";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
@@ -28,6 +35,14 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/crm" element={<Index />} />
+          <Route path="/clients" element={<Companies />} />
+          <Route path="/companies" element={<Companies />} />
+          <Route path="/deals" element={<Deals />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/ai-assistant" element={<AIAssistant />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

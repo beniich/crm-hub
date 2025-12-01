@@ -15,12 +15,12 @@ import {
 } from "@/components/ui/sidebar";
 
 const navigationItems = [
-  { title: "Tableau de bord", url: "/", icon: LayoutDashboard },
+  { title: "Vue d'ensemble", url: "/crm", icon: LayoutDashboard },
   { title: "Assistant IA", url: "/ai-assistant", icon: Sparkles },
+  { title: "Clients", url: "/companies", icon: Building2 },
   { title: "Opportunités", url: "/deals", icon: TrendingUp },
   { title: "Produits", url: "/products", icon: Package },
   { title: "Analytics", url: "/analytics", icon: BarChart3 },
-  { title: "Clients", url: "/clients", icon: Users },
   { title: "Paramètres", url: "/settings", icon: Settings },
 ];
 
