@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Cloud, Database, Lock, Cpu, Network, BarChart, Check, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 import serviceCloudDashboard from "@/assets/service-cloud-dashboard.png";
@@ -24,6 +24,15 @@ interface ServiceSectionProps {
 const ServiceSection = ({ title, description, features, image, icon: Icon, reversed, index }: ServiceSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+  
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1.05, 0.95]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.6, 1, 1, 0.6]);
 
   return (
     <motion.section
@@ -31,7 +40,7 @@ const ServiceSection = ({ title, description, features, image, icon: Icon, rever
       initial={{ opacity: 0, y: 80 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 80 }}
       transition={{ duration: 0.8, delay: 0.1 }}
-      className={`py-24 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/20'}`}
+      className={`py-24 ${index % 2 === 0 ? 'bg-background' : 'bg-muted/20'} overflow-hidden`}
     >
       <div className="container mx-auto px-4">
         <div className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${reversed ? 'lg:flex-row-reverse' : ''}`}>
@@ -78,33 +87,33 @@ const ServiceSection = ({ title, description, features, image, icon: Icon, rever
             </Button>
           </motion.div>
 
-          {/* Image */}
-          <motion.div
-            initial={{ opacity: 0, x: reversed ? -50 : 50, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, x: 0, scale: 1 } : { opacity: 0, x: reversed ? -50 : 50, scale: 0.95 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className={`relative ${reversed ? 'lg:order-1' : ''}`}
-          >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent z-10 pointer-events-none" />
-              <img
-                src={image}
-                alt={title}
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            {/* Floating decoration */}
+          {/* Image with Parallax */}
+          <div className={`relative ${reversed ? 'lg:order-1' : ''}`}>
             <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              style={{ y, scale, opacity }}
+              className="relative"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent z-10 pointer-events-none" />
+                <motion.img
+                  src={image}
+                  alt={title}
+                  className="w-full h-auto object-cover"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.4 }}
+                />
+              </div>
+            </motion.div>
+            {/* Floating decoration with parallax */}
+            <motion.div
+              style={{ y: useTransform(scrollYProgress, [0, 1], [50, -50]) }}
               className="absolute -top-6 -right-6 h-24 w-24 rounded-2xl bg-primary/10 -z-10"
             />
             <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              style={{ y: useTransform(scrollYProgress, [0, 1], [-30, 70]) }}
               className="absolute -bottom-6 -left-6 h-32 w-32 rounded-full bg-accent/30 -z-10"
             />
-          </motion.div>
+          </div>
         </div>
       </div>
     </motion.section>
