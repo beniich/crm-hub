@@ -104,7 +104,10 @@ export default {
   			md: 'var(--shadow-md)',
   			lg: 'var(--shadow-lg)',
   			xl: 'var(--shadow-xl)',
-  			'2xl': 'var(--shadow-2xl)'
+  			'2xl': 'var(--shadow-2xl)',
+  			'neu': 'var(--neu-shadow-light)',
+  			'neu-hover': 'var(--neu-shadow-light-hover)',
+  			'neu-inset': 'var(--neu-shadow-light-inset)'
   		},
   		fontFamily: {
   			sans: [
