@@ -20,7 +20,7 @@ const Companies = () => {
           </div>
           <CustomerDialog
             trigger={
-              <Button className="gap-2">
+              <Button className="gap-2" variant="neumorphismPrimary">
                 <Plus className="h-4 w-4" />
                 Nouveau Client
               </Button>

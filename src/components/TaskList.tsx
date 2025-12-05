@@ -68,7 +68,7 @@ export function TaskList({ tasks, onStatusChange, onDelete, onEdit }: TaskListPr
   };
 
   return (
-    <Card>
+    <Card variant="neumorphismFlat">
       <CardHeader>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <CardTitle className="text-lg">Liste des tâches</CardTitle>
@@ -80,14 +80,15 @@ export function TaskList({ tasks, onStatusChange, onDelete, onEdit }: TaskListPr
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-9 w-full sm:w-[200px]"
+                variant="neumorphism"
               />
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full sm:w-[140px]">
+              <SelectTrigger className="w-full sm:w-[140px] shadow-neu rounded-xl">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Statut" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-background shadow-neu rounded-xl">
                 <SelectItem value="all">Tous</SelectItem>
                 <SelectItem value="todo">À faire</SelectItem>
                 <SelectItem value="in_progress">En cours</SelectItem>
@@ -95,10 +96,10 @@ export function TaskList({ tasks, onStatusChange, onDelete, onEdit }: TaskListPr
               </SelectContent>
             </Select>
             <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-              <SelectTrigger className="w-full sm:w-[140px]">
+              <SelectTrigger className="w-full sm:w-[140px] shadow-neu rounded-xl">
                 <SelectValue placeholder="Priorité" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-background shadow-neu rounded-xl">
                 <SelectItem value="all">Toutes</SelectItem>
                 <SelectItem value="high">Haute</SelectItem>
                 <SelectItem value="medium">Moyenne</SelectItem>
@@ -114,7 +115,7 @@ export function TaskList({ tasks, onStatusChange, onDelete, onEdit }: TaskListPr
             Aucune tâche trouvée
           </div>
         ) : (
-          <div className="divide-y">
+          <div className="divide-y divide-border/50">
             {filteredTasks.map((task) => (
               <div
                 key={task.id}
@@ -157,7 +158,7 @@ export function TaskList({ tasks, onStatusChange, onDelete, onEdit }: TaskListPr
                 </div>
                 <div className="flex gap-1">
                   <Button
-                    variant="ghost"
+                    variant="neumorphism"
                     size="icon"
                     className="h-8 w-8"
                     onClick={() => onEdit(task)}
@@ -165,7 +166,7 @@ export function TaskList({ tasks, onStatusChange, onDelete, onEdit }: TaskListPr
                     <Edit className="h-4 w-4" />
                   </Button>
                   <Button
-                    variant="ghost"
+                    variant="neumorphism"
                     size="icon"
                     className="h-8 w-8 text-destructive hover:text-destructive"
                     onClick={() => onDelete(task.id)}

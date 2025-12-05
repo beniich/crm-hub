@@ -187,19 +187,19 @@ export function InteractiveSpreadsheet({
   };
 
   return (
-    <Card>
+    <Card variant="neumorphismFlat">
       <CardHeader>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <CardTitle className="text-lg">{title}</CardTitle>
           <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" onClick={addColumn}>
+            <Button variant="neumorphism" size="sm" onClick={addColumn}>
               <Plus className="h-4 w-4 mr-1" /> Colonne
             </Button>
-            <Button variant="outline" size="sm" onClick={addRow}>
+            <Button variant="neumorphism" size="sm" onClick={addRow}>
               <Plus className="h-4 w-4 mr-1" /> Ligne
             </Button>
             <label>
-              <Button variant="outline" size="sm" asChild>
+              <Button variant="neumorphism" size="sm" asChild>
                 <span>
                   <Upload className="h-4 w-4 mr-1" /> Importer CSV
                 </span>
@@ -211,20 +211,20 @@ export function InteractiveSpreadsheet({
                 className="hidden"
               />
             </label>
-            <Button variant="outline" size="sm" onClick={exportToCSV}>
+            <Button variant="neumorphism" size="sm" onClick={exportToCSV}>
               <Download className="h-4 w-4 mr-1" /> Exporter
             </Button>
-            <Button size="sm" onClick={handleSave}>
+            <Button variant="neumorphismPrimary" size="sm" onClick={handleSave}>
               <Save className="h-4 w-4 mr-1" /> Sauvegarder
             </Button>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto shadow-neu-inset rounded-xl p-4">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="border-b border-border/50">
                 <TableHead className="w-[50px]">#</TableHead>
                 {columns.map((col) => (
                   <TableHead key={col.id} className="min-w-[150px]">
@@ -237,6 +237,7 @@ export function InteractiveSpreadsheet({
                           onKeyDown={(e) => e.key === "Enter" && setEditingHeader(null)}
                           autoFocus
                           className="h-7 text-sm"
+                          variant="neumorphism"
                         />
                       ) : (
                         <span 
@@ -272,7 +273,7 @@ export function InteractiveSpreadsheet({
             </TableHeader>
             <TableBody>
               {rows.map((row, rowIndex) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} className="border-b border-border/30">
                   <TableCell className="text-muted-foreground text-sm">
                     {rowIndex + 1}
                   </TableCell>
@@ -287,11 +288,12 @@ export function InteractiveSpreadsheet({
                           autoFocus
                           type={col.type === "number" ? "number" : col.type === "date" ? "date" : "text"}
                           className="h-8"
+                          variant="neumorphism"
                         />
                       ) : (
                         <div
                           onClick={() => setEditingCell({ rowId: row.id, colId: col.id })}
-                          className="min-h-[32px] px-2 py-1 cursor-pointer hover:bg-muted rounded flex items-center"
+                          className="min-h-[32px] px-2 py-1 cursor-pointer hover:bg-muted/50 rounded-lg flex items-center"
                         >
                           {row.data[col.id] || <span className="text-muted-foreground">—</span>}
                         </div>

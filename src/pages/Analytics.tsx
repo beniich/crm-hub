@@ -155,7 +155,7 @@ const Analytics = () => {
               Visualisez vos performances et tendances
             </p>
           </div>
-          <Button onClick={exportToPDF} className="gap-2">
+          <Button onClick={exportToPDF} variant="neumorphismPrimary" className="gap-2">
             <Download className="h-4 w-4" />
             Exporter PDF
           </Button>
@@ -163,7 +163,7 @@ const Analytics = () => {
 
         {/* KPI Cards */}
         <div className="grid grid-cols-4 gap-4">
-          <Card className="p-6">
+          <Card variant="neumorphism" className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Revenu Total</p>
@@ -175,7 +175,7 @@ const Analytics = () => {
             </div>
           </Card>
 
-          <Card className="p-6">
+          <Card variant="neumorphism" className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Opportunités</p>
@@ -185,7 +185,7 @@ const Analytics = () => {
             </div>
           </Card>
 
-          <Card className="p-6">
+          <Card variant="neumorphism" className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Clients</p>
@@ -195,7 +195,7 @@ const Analytics = () => {
             </div>
           </Card>
 
-          <Card className="p-6">
+          <Card variant="neumorphism" className="p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Taux de conversion</p>
@@ -209,7 +209,7 @@ const Analytics = () => {
         </div>
 
         <Tabs defaultValue="revenue" className="w-full">
-          <TabsList>
+          <TabsList className="shadow-neu bg-background rounded-xl p-1">
             <TabsTrigger value="revenue">Revenus</TabsTrigger>
             <TabsTrigger value="pipeline">Pipeline</TabsTrigger>
             <TabsTrigger value="clients">Clients</TabsTrigger>
@@ -217,7 +217,7 @@ const Analytics = () => {
           </TabsList>
 
           <TabsContent value="revenue">
-            <Card className="p-6">
+            <Card variant="neumorphismFlat" className="p-6">
               <h3 className="text-lg font-semibold mb-4">Évolution du Revenu</h3>
               <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={revenueData}>
@@ -234,7 +234,7 @@ const Analytics = () => {
           </TabsContent>
 
           <TabsContent value="pipeline">
-            <Card className="p-6">
+            <Card variant="neumorphismFlat" className="p-6">
               <h3 className="text-lg font-semibold mb-4">Performance par Catégorie</h3>
               <ResponsiveContainer width="100%" height={400}>
                 <PieChart>
@@ -259,7 +259,7 @@ const Analytics = () => {
           </TabsContent>
 
           <TabsContent value="clients">
-            <Card className="p-6">
+            <Card variant="neumorphismFlat" className="p-6">
               <h3 className="text-lg font-semibold mb-4">Top 5 Produits les Plus Vendus</h3>
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={topProducts} layout="vertical">
@@ -276,7 +276,7 @@ const Analytics = () => {
           </TabsContent>
 
           <TabsContent value="conversion">
-            <Card className="p-6">
+            <Card variant="neumorphismFlat" className="p-6">
               <h3 className="text-lg font-semibold mb-4">Évolution du Revenu Mensuel</h3>
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart data={revenueData}>

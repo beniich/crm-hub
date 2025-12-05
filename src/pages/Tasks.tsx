@@ -185,14 +185,14 @@ const Tasks = () => {
               Organisez et suivez vos tâches
             </p>
           </div>
-          <Button onClick={handleAddTask}>
+          <Button onClick={handleAddTask} variant="neumorphismPrimary">
             <Plus className="h-4 w-4 mr-2" />
             Nouvelle tâche
           </Button>
         </div>
 
         <Tabs defaultValue="kanban" className="w-full">
-          <TabsList>
+          <TabsList className="shadow-neu bg-background rounded-xl p-1">
             <TabsTrigger value="kanban" className="gap-2">
               <LayoutGrid className="h-4 w-4" />
               Kanban

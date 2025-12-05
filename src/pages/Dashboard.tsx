@@ -23,7 +23,7 @@ const Dashboard = () => {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
-            <Card key={index} className="border-border/50">
+            <Card key={index} variant="neumorphism">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -38,47 +38,47 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <Card className="border-border/50">
+        <Card variant="neumorphismFlat">
           <CardHeader>
             <CardTitle>Actions rapides</CardTitle>
             <CardDescription>Gérez vos services et ressources</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button asChild variant="outline">
+            <Button asChild variant="neumorphism">
               <Link to="/services">Parcourir les services</Link>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="neumorphism">
               <Link to="/analytics">Voir les analyses</Link>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="neumorphism">
               <Link to="/settings">Paramètres</Link>
             </Button>
           </CardContent>
         </Card>
 
         {/* Recent Activity */}
-        <Card className="border-border/50">
+        <Card variant="neumorphismFlat">
           <CardHeader>
             <CardTitle>Activité récente</CardTitle>
             <CardDescription>Dernières actions sur votre compte</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 bg-muted/30 rounded-lg">
+              <div className="flex items-center gap-4 p-4 bg-background shadow-neu-inset rounded-xl">
                 <div className="h-2 w-2 rounded-full bg-green-500" />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Nouveau serveur déployé</p>
                   <p className="text-xs text-muted-foreground">Il y a 2 heures</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4 p-4 bg-muted/30 rounded-lg">
+              <div className="flex items-center gap-4 p-4 bg-background shadow-neu-inset rounded-xl">
                 <div className="h-2 w-2 rounded-full bg-blue-500" />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Mise à jour du stockage</p>
                   <p className="text-xs text-muted-foreground">Il y a 5 heures</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4 p-4 bg-muted/30 rounded-lg">
+              <div className="flex items-center gap-4 p-4 bg-background shadow-neu-inset rounded-xl">
                 <div className="h-2 w-2 rounded-full bg-purple-500" />
                 <div className="flex-1">
                   <p className="text-sm font-medium">Nouvel utilisateur ajouté</p>

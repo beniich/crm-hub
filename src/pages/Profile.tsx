@@ -94,11 +94,11 @@ const Profile = () => {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <Card className="p-6">
+        <Card variant="neumorphismFlat" className="p-6">
           <div className="flex items-start gap-6">
-            <Avatar className="h-24 w-24">
+            <Avatar className="h-24 w-24 shadow-neu">
               <AvatarImage src={profile.avatar_url} />
-              <AvatarFallback className="text-2xl">
+              <AvatarFallback className="text-2xl bg-background">
                 {profile.full_name.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
@@ -136,12 +136,12 @@ const Profile = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <Card className="p-4 text-center">
+              <Card variant="neumorphism" className="p-4 text-center">
                 <TrendingUp className="h-6 w-6 mx-auto mb-2 text-primary" />
                 <div className="text-2xl font-bold">{stats.totalDeals}</div>
                 <div className="text-sm text-muted-foreground">Opportunités</div>
               </Card>
-              <Card className="p-4 text-center">
+              <Card variant="neumorphism" className="p-4 text-center">
                 <DollarSign className="h-6 w-6 mx-auto mb-2 text-success" />
                 <div className="text-2xl font-bold">{stats.revenue.toLocaleString()}€</div>
                 <div className="text-sm text-muted-foreground">Revenu</div>
@@ -151,17 +151,17 @@ const Profile = () => {
         </Card>
 
         <Tabs defaultValue="activity" className="w-full">
-          <TabsList>
+          <TabsList className="shadow-neu bg-background rounded-xl p-1">
             <TabsTrigger value="activity">Activité</TabsTrigger>
             <TabsTrigger value="documents">Documents</TabsTrigger>
             <TabsTrigger value="stats">Statistiques</TabsTrigger>
           </TabsList>
 
           <TabsContent value="activity" className="space-y-4">
-            <Card className="p-6">
+            <Card variant="neumorphismFlat" className="p-6">
               <h3 className="text-lg font-semibold mb-4">Activité Récente</h3>
               <div className="space-y-4">
-                <div className="flex items-start gap-4 pb-4 border-b">
+                <div className="flex items-start gap-4 pb-4 border-b border-border/50">
                   <div className="h-2 w-2 rounded-full bg-primary mt-2" />
                   <div className="flex-1">
                     <p className="font-medium">Opportunité créée</p>
@@ -169,7 +169,7 @@ const Profile = () => {
                     <p className="text-xs text-muted-foreground mt-1">Il y a 2 heures</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 pb-4 border-b">
+                <div className="flex items-start gap-4 pb-4 border-b border-border/50">
                   <div className="h-2 w-2 rounded-full bg-success mt-2" />
                   <div className="flex-1">
                     <p className="font-medium">Document ajouté</p>
@@ -182,7 +182,7 @@ const Profile = () => {
           </TabsContent>
 
           <TabsContent value="documents">
-            <Card className="p-6">
+            <Card variant="neumorphismFlat" className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">Documents</h3>
                 <Badge>{stats.documents} fichiers</Badge>
@@ -194,21 +194,21 @@ const Profile = () => {
           </TabsContent>
 
           <TabsContent value="stats">
-            <Card className="p-6">
+            <Card variant="neumorphismFlat" className="p-6">
               <h3 className="text-lg font-semibold mb-4">Statistiques Détaillées</h3>
               <div className="grid grid-cols-3 gap-4">
-                <div>
+                <Card variant="neumorphismInset" className="p-4">
                   <div className="text-2xl font-bold text-primary">{stats.totalDeals}</div>
                   <div className="text-sm text-muted-foreground">Opportunités totales</div>
-                </div>
-                <div>
+                </Card>
+                <Card variant="neumorphismInset" className="p-4">
                   <div className="text-2xl font-bold text-success">{stats.revenue.toLocaleString()}€</div>
                   <div className="text-sm text-muted-foreground">Revenu généré</div>
-                </div>
-                <div>
+                </Card>
+                <Card variant="neumorphismInset" className="p-4">
                   <div className="text-2xl font-bold text-info">{stats.documents}</div>
                   <div className="text-sm text-muted-foreground">Documents</div>
-                </div>
+                </Card>
               </div>
             </Card>
           </TabsContent>

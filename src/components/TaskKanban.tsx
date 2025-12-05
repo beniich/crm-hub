@@ -59,7 +59,7 @@ function TaskCard({ task, isDragging }: { task: Task; isDragging?: boolean }) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes}>
-      <Card className="mb-3 cursor-grab active:cursor-grabbing hover:shadow-md transition-shadow bg-card">
+      <Card variant="neumorphism" className="mb-3 cursor-grab active:cursor-grabbing">
         <CardContent className="p-3">
           <div className="flex items-start gap-2">
             <div {...listeners} className="mt-1 cursor-grab">
@@ -105,7 +105,7 @@ function KanbanColumn({
 }) {
   return (
     <div className="flex-1 min-w-[300px]">
-      <Card className="h-full bg-muted/30">
+      <Card variant="neumorphismInset" className="h-full">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -115,7 +115,7 @@ function KanbanColumn({
                 {tasks.length}
               </Badge>
             </div>
-            <Button variant="ghost" size="icon" className="h-6 w-6" onClick={onAddTask}>
+            <Button variant="neumorphism" size="icon" className="h-6 w-6" onClick={onAddTask}>
               <Plus className="h-4 w-4" />
             </Button>
           </div>

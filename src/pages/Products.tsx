@@ -145,7 +145,7 @@ const Products = () => {
               Gérez votre catalogue de produits et services
             </p>
           </div>
-          <Button className="gap-2" onClick={handleAddProduct}>
+          <Button className="gap-2" variant="neumorphismPrimary" onClick={handleAddProduct}>
             <Plus className="h-4 w-4" />
             Ajouter Produit
           </Button>
@@ -159,18 +159,19 @@ const Products = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
+              variant="neumorphism"
             />
           </div>
         </div>
 
         {filteredProducts.length === 0 ? (
-          <Card className="p-12 text-center">
+          <Card variant="neumorphismFlat" className="p-12 text-center">
             <Package className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
             <h3 className="text-lg font-semibold mb-2">Aucun produit</h3>
             <p className="text-muted-foreground mb-4">
               Commencez par ajouter des produits à votre catalogue
             </p>
-            <Button className="gap-2" onClick={handleAddProduct}>
+            <Button className="gap-2" variant="neumorphismPrimary" onClick={handleAddProduct}>
               <Plus className="h-4 w-4" />
               Ajouter Produit
             </Button>
@@ -178,7 +179,7 @@ const Products = () => {
         ) : (
           <div className="grid grid-cols-3 gap-6">
             {filteredProducts.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+              <Card key={product.id} variant="neumorphism" className="overflow-hidden">
                 <div className="aspect-video bg-muted relative">
                   {product.image_url ? (
                     <img
@@ -219,20 +220,20 @@ const Products = () => {
                   <div className="flex gap-2 mt-4">
                     <Button 
                       className="flex-1" 
-                      variant="outline"
+                      variant="neumorphism"
                       onClick={() => navigate(`/products/${product.id}`)}
                     >
                       <Eye className="h-4 w-4 mr-2" />
                       Voir
                     </Button>
                     <Button 
-                      variant="outline"
+                      variant="neumorphism"
                       onClick={() => handleEditProduct(product)}
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
                     <Button 
-                      variant="outline"
+                      variant="neumorphism"
                       onClick={() => handleDeleteClick(product.id)}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -253,7 +254,7 @@ const Products = () => {
       />
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="shadow-neu bg-background rounded-xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Confirmer la suppression</AlertDialogTitle>
             <AlertDialogDescription>
