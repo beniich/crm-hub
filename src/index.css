@@ -83,6 +83,11 @@ All colors MUST be HSL.
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
     --tracking-normal: 0em;
     --spacing: 0.25rem;
+
+    /* Neumorphism shadows */
+    --neu-shadow-light: -6px -6px 14px hsl(0 0% 100% / 0.7), 6px 6px 14px hsl(0 0% 0% / 0.15);
+    --neu-shadow-light-inset: inset -3px -3px 7px hsl(0 0% 100% / 0.7), inset 3px 3px 7px hsl(0 0% 0% / 0.12);
+    --neu-shadow-light-hover: -4px -4px 10px hsl(0 0% 100% / 0.8), 4px 4px 10px hsl(0 0% 0% / 0.12);
   }
 
   .dark {
@@ -140,6 +145,11 @@ All colors MUST be HSL.
     --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
     --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+    /* Neumorphism shadows - dark mode */
+    --neu-shadow-light: -6px -6px 14px hsl(0 0% 20% / 0.5), 6px 6px 14px hsl(0 0% 0% / 0.5);
+    --neu-shadow-light-inset: inset -3px -3px 7px hsl(0 0% 20% / 0.4), inset 3px 3px 7px hsl(0 0% 0% / 0.4);
+    --neu-shadow-light-hover: -4px -4px 10px hsl(0 0% 22% / 0.5), 4px 4px 10px hsl(0 0% 0% / 0.4);
   }
 }
 
