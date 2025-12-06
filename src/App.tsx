@@ -21,6 +21,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Tasks from "./pages/Tasks";
 import Spreadsheet from "./pages/Spreadsheet";
+import DiagramEditorPage from "./pages/DiagramEditorPage";
 import NotFound from "./pages/NotFound";
 import { WhatsAppWidget } from "./components/WhatsAppWidget";
 
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/ai-assistant" element={<AIAssistant />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/spreadsheet" element={<Spreadsheet />} />
+          <Route path="/diagram-editor" element={<DiagramEditorPage />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
