@@ -105,25 +105,26 @@ export default {
   			lg: 'var(--shadow-lg)',
   			xl: 'var(--shadow-xl)',
   			'2xl': 'var(--shadow-2xl)',
-  			'neu': 'var(--neu-shadow-light)',
+  			neu: 'var(--neu-shadow-light)',
   			'neu-hover': 'var(--neu-shadow-light-hover)',
   			'neu-inset': 'var(--neu-shadow-light-inset)'
   		},
   		fontFamily: {
   			sans: [
-  				'Roboto',
+  				'DM Sans',
   				'ui-sans-serif',
   				'system-ui',
   				'-apple-system',
   				'BlinkMacSystemFont',
   				'Segoe UI',
+  				'Roboto',
   				'Helvetica Neue',
   				'Arial',
   				'Noto Sans',
   				'sans-serif'
   			],
   			serif: [
-  				'Libre Caslon Text',
+  				'Crimson Pro',
   				'ui-serif',
   				'Georgia',
   				'Cambria',
@@ -132,7 +133,7 @@ export default {
   				'serif'
   			],
   			mono: [
-  				'Roboto Mono',
+  				'SF Mono',
   				'ui-monospace',
   				'SFMono-Regular',
   				'Menlo',
