@@ -20,19 +20,19 @@ All colors MUST be HSL.
     --foreground: 24 9% 10%;
 
     --card: 60 9% 97%;
-    --card-foreground: 229 84% 4.902%;
+    --card-foreground: 24 9% 10%;
 
     --popover: 20 5% 90%;
-    --popover-foreground: 224 71.4286% 4.1176%;
+    --popover-foreground: 24 9% 10%;
 
     --primary: 37 92% 50%;
     --primary-foreground: 47 100% 96%;
 
-    --secondary: 229 84% 4.902%;
+    --secondary: 224 71.4286% 4.1176%;
     --secondary-foreground: 60 9% 97%;
 
     --muted: 23 5% 82%;
-    --muted-foreground: 224 71.4286% 4.1176%;
+    --muted-foreground: 24 9% 10%;
 
     --accent: 47 100% 96%;
     --accent-foreground: 37 92% 50%;
